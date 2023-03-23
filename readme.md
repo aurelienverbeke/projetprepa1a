@@ -2,6 +2,8 @@
 
 Voici mon projet :
 
+Ceci est un test
+
 ```python
 
 import random
