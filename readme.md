@@ -1,5 +1,7 @@
 # Projet d'info 1A
 
+Voici mon projet :
+
 ```python
 
 import random
