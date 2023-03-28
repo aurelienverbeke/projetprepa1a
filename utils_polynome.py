@@ -6,7 +6,7 @@ Authors:
     - VERBEKE Aurelien
     - VERGNOU Brice
 """
-
+from math import inf
 
 
 
@@ -134,8 +134,25 @@ def monome(n):
     """
   return [0]*(n) + [1]
 
-
-
+def deg(P):
+  """
+    Renvoie le degré du polynôme passé en entrée  
+    Args:
+        - P (list): le polynôme
+    Returns :   
+        int or float : le degré du polynôme
+    Exemple :
+      >>> deg([0])
+      -inf
+      >>> deg([5,6,3,0])
+      2
+  """
+  P = reduire_coeff(P)
+  degre = len(P) - 1
+  if degre == 0 and P[0] == 0:
+    return - inf
+  else:
+    return degre
 
 
 
