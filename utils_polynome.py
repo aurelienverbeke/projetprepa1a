@@ -37,7 +37,7 @@ def reduire_coeff(P):
     pCopie = list(P)
 
     # on supprime les coefficients nuls
-    while pCopie[-1] == 0 and len(pCopie) > 1:
+    while len(pCopie) > 1 and pCopie[-1] == 0:
         pCopie.pop()
 
     return pCopie
@@ -59,7 +59,7 @@ def somme(P1, P2):
     """
 
     # on recupere le degre maximal des deux polynomes
-    degre = max([deg(P1), deg(P2)])
+    degre = max(deg(P1), deg(P2))
 
     # on cree le nouveau polynome qui contiendra la somme des deux
     pSomme = [0] * (degre + 1)
@@ -91,7 +91,7 @@ def diff(P1, P2):
     """
 
     # on recupere le degre maximal des deux polynomes
-    degre = max([deg(P1), deg(P2)])
+    degre = max(deg(P1), deg(P2))
 
     # on cree le nouveau polynome qui contiendra la difference des deux
     pDiff = [0] * (degre + 1)
@@ -130,7 +130,7 @@ def produit(P1, P2):
         for puissance2, valeur2 in enumerate(P2):
             # on calcule le produit de deux coefficients et on l'ajoute dans la bonne case correspondant a la bonne puissance de X
             pProd[puissance1 + puissance2] += valeur1*valeur2
-    
+
     # on en profite pour enlever les coefficients inutiles
     return reduire_coeff(pProd)
 
@@ -246,7 +246,44 @@ def unitaire(P):
     p_unitaire = [x/coef_dominant for x in p_unitaire]
     return p_unitaire
 
+"""
+def produit(P, Q):
+    if len(P) == 1:
+        return [P[0]*x for x in Q]
+    if len(Q) == 1:
+        return [Q[0]*x for x in P]
+    if P == [0] or Q == [0]:
+        return [0]
 
+    degreeP = deg(P)
+    degreeQ = deg(Q)
+    n = max(degreeP, degreeQ) + 1
+    if n % 2 == 1 : n += 1
+
+    n //= 2
+
+    P1 = P[:max(n, degreeP)]
+    Q1 = Q[:max(n, degreeQ)]
+    P2 = P[max(n, degreeP):]
+    Q2 = Q[max(n, degreeQ):]
+
+    if not P2: P2 = [0]
+    if not Q2: Q2 = [0]
+
+    E1 = produit(P1, Q1)
+    E2 = produit(P2, Q2)
+    E3 = produit(somme(P1, P2), somme(Q1, Q2))
+
+    print(P1, Q1, P2, Q2, n)
+    print(E1, E2, E3, n)
+
+    P_inter = [0]*n + diff(diff(E3, E1), E2)
+    P_extr = [0]*(2*n) + E2
+
+    print(somme(somme(E1, P_inter), P_extr), P, Q)
+
+    return somme(somme(E1, P_inter), P_extr)
+"""
 def puissance(P, n, stockage={}):
     P = list(P)
     if n == 0:
@@ -280,7 +317,7 @@ if __name__ == "__main__":
     n = 50
     t = time()
     puissance(P, n)
-    print(time()-t)
+    print(time() - t)
     t = time()
     puissance_naive(P, n)
-    print(time()-t)
+    print(time() - t)
