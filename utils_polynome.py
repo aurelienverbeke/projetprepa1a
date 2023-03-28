@@ -123,6 +123,9 @@ def produit(P1, P2):
             [0, 0, 4, 11, 6]
     """
 
+    if deg(P1) == - inf or deg(P2) == - inf:
+        return [0]
+
     # on cree le nouveau polynome
     pProd = [0]*(deg(P1)+deg(P2)+1)
 
