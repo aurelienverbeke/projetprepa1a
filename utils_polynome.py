@@ -7,7 +7,12 @@ Authors:
     - VERGNOU Brice
 """
 
+
+
+
+
 # Aurelien
+
 def somme(P1, P2):
     """
         Renvoie la somme de deux polynomes
@@ -18,7 +23,6 @@ def somme(P1, P2):
         Exemple:
             >>> somme([4, 3, -2], [3, 6, 2])
             [7, 9]
-
     """
 
     longueurMax = max([len(P1), len(P2)])
@@ -34,6 +38,45 @@ def somme(P1, P2):
         somme.pop()
     
     return somme
+
+
+
+
+
+def diff(P1, P2):
+    """
+        Renvoie la difference de deux polynomes (premier moins deuxieme)
+        Args:
+            - P1, P2 (list): deux polynomes a soustraire
+        Returns:
+            list: difference des deux polynomes
+        Exemple:
+            >>> diff([4, 3, -2], [3, 6, 2])
+            [1, -3, -4]
+    """
+
+    longueurMax = max([len(P1), len(P2)])
+    diff = [0] * longueurMax
+    
+    for i in range(longueurMax):
+        if i < len(P1):
+            diff[i] += P1[i]
+        if i < len(P2):
+            diff[i] -= P2[i]
+    
+    while diff[-1] == 0:
+        diff.pop()
+    
+    return diff
+
+
+
+
+
+
+
+
+
 
 # Brice
 
