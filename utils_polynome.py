@@ -7,7 +7,6 @@ Authors:
     - VERGNOU Brice
 """
 
-
 # Aurelien
 
 def somme(P1, P2):
@@ -40,6 +39,9 @@ def somme(P1, P2):
         pSomme.pop()
 
     return pSomme
+
+
+
 
 
 def diff(P1, P2):
@@ -75,10 +77,18 @@ def diff(P1, P2):
     return pDiff
 
 
+
+
+
+
+
+
+
+
 # Brice
 
 def monome(n):
-    """
+  """
     Renvoie une liste de coefficients par ordre de puissances croissantes
     correspondant au monome X^n
     Args:
@@ -89,14 +99,13 @@ def monome(n):
       >>> monome(4)
       [0, 0, 0, 0, 1]
     """
-    return [0] * (n) + [1]
-
+  return [0]*(n) + [1]
 
 # Raphael
 
 def polyn_to_str(P):
     """
-    Renvoie la chaine de caractères représentant le polynome P, sous la forme "a X**n + b X**(n-1) + ... "
+    Renvoie la chaine de caractères représentant le polynôme P, sous la forme "a X**n + b X**(n-1) + ... "
     Args:
         - P (list): le polynome à représenter
     Returns:
@@ -129,7 +138,7 @@ def polyn_to_str(P):
             else:
                 monome = f"X**{i} "
             chaine += coef + monome
-    return chaine.strip("+ ") #On retire le + au début du polynome
+    return chaine.strip("+ ")
 
 
 if __name__ == "__main__":
