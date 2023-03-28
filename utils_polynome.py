@@ -223,9 +223,32 @@ def polyn_to_str(P):
     return chaine.strip("+ ")
 
 
+def unitaire(P):
+    """
+    Revoie le polynome unitaire correspondant a P
+    Args:
+         - P (list): Le polynome que l'on veut transformer en polynome unitaire
+    Returns:
+        list: Le polynome unitaire correspondant à P
+    Exemple:
+        >>> unitaire([2, -7, -6, 34, 10, -63, -22, 44, 24])
+        [0.08333333333333333, -0.2916666666666667, -0.25, 1.4166666666666667, 0.4166666666666667, -2.625, -0.9166666666666666, 1.8333333333333333, 1.0]
+    """
+    if P == [0]:
+        return [0]
+    elif P[-1] == 1:
+        return reduire_coeff(P)
+
+    p_unitaire = reduire_coeff(P)
+    coef_dominant = p_unitaire[-1]
+    p_unitaire = [x/coef_dominant for x in p_unitaire]
+    return p_unitaire
+
+
 if __name__ == "__main__":
     with open("polyn.txt", "r") as f:
         for p in f.readlines():
             p = list(map(int, eval(p)))
+            print(polyn_to_str(unitaire(p)))
             print(polyn_to_str(p))
-    print(polyn_to_str([0, -2, -1, 0, 0, 3]))
+            print(" ")
