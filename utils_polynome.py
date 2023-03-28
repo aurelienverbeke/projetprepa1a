@@ -70,9 +70,7 @@ def somme(P1, P2):
             pSomme[i] += P2[i]
 
     # on supprime les coefficients nuls
-    pSomme = reduire_coeff(pSomme)
-
-    return pSomme
+    return reduire_coeff(pSomme)
 
 
 
@@ -91,7 +89,7 @@ def diff(P1, P2):
     """
 
     # on recupere le degre maximal des deux polynomes
-    longueurMax = max([deg(P1), deg(P2)])
+    degre = max([deg(P1), deg(P2)])
 
     # on cree le nouveau polynome qui contiendra la difference des deux
     pDiff = [0] * (degre + 1)
@@ -105,9 +103,34 @@ def diff(P1, P2):
             pDiff[i] -= P2[i]
 
     # on supprime les coefficients nuls
-    pDiff = reduire_coeff(pDiff)
+    return reduire_coeff(pDiff)
 
-    return pDiff
+
+
+
+
+def produit(P1, P2):
+    """
+        Renvoie le produit de deux polynomes
+        Args:
+            - P1, P2 (list): deux polynomes a multiplier
+        Returns:
+            list: produit de deux polynomes
+        Exemple:
+            >>> produit([0, 0, 4, 3], [1, 2])
+            [0, 0, 4, 11, 6]
+    """
+
+    # on cree le nouveau polynome
+    pProd = [0]*(deg(P1)+deg(P2)+1)
+
+    for puissance1, valeur1 in enumerate(P1):
+        for puissance2, valeur2 in enumerate(P2):
+            # on calcule le produit de deux coefficients et on l'ajoute dans la bonne case correspondant a la bonne puissance de X
+            pProd[puissance1 + puissance2] += valeur1*valeur2
+    
+    # on en profite pour enlever les coefficients inutiles
+    return reduire_coeff(pProd)
 
 
 
