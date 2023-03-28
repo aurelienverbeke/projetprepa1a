@@ -7,6 +7,8 @@ Authors:
     - VERGNOU Brice
 """
 from math import inf
+from time import time
+from random import randint
 
 
 
@@ -245,10 +247,40 @@ def unitaire(P):
     return p_unitaire
 
 
+def puissance(P, n, stockage={}):
+    P = list(P)
+    if n == 0:
+        return [1]
+    if n == 1:
+        return P
+    if n % 2 == 0:
+        T = stockage.get(n//2, None)
+        if T is None:
+          T = puissance(P, n//2, stockage=stockage)
+          stockage[n//2] = T
+        return produit(T, T)
+    else:
+        T = stockage.get((n-1)//2, None)
+        if T is None:
+          T = puissance(P, (n-1)//2, stockage=stockage)
+          stockage[(n-1)//2] = T
+        return produit(produit(T, T), P)
+
+
+def puissance_naive(P, n):
+    P = list(P)
+    T = list(P)
+    for i in range(n-1):
+        P = produit(P, T)
+    return P
+
+
 if __name__ == "__main__":
-    with open("polyn.txt", "r") as f:
-        for p in f.readlines():
-            p = list(map(int, eval(p)))
-            print(polyn_to_str(unitaire(p)))
-            print(polyn_to_str(p))
-            print(" ")
+    P = [randint(0, 100) for x in range(100)]
+    n = 50
+    t = time()
+    puissance(P, n)
+    print(time()-t)
+    t = time()
+    puissance_naive(P, n)
+    print(time()-t)
