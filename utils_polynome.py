@@ -7,7 +7,42 @@ Authors:
     - VERGNOU Brice
 """
 
+
+
+
+
+
+
+
+
+
 # Aurelien
+
+def reduire_coeff(P):
+    """
+        Retire les coefficients nuls en fin de polynome
+        Args:
+            P (list): le polynome a reduire
+        Returns:
+            list: le polynome reduit
+        Exemple:
+            >>> reduire_coeff([1, 4, 3, 0, 0])
+            [1, 4, 3]
+    """
+
+    # on copie le polynome pour ne pas travailler sur le polynome en entree
+    # la copie de cette maniere est possible, la liste etant a une dimension
+    pCopie = list(P)
+
+    # on supprime les coefficients nuls
+    while pCopie[-1] == 0:
+        pCopie.pop()
+
+    return pCopie
+
+
+
+
 
 def somme(P1, P2):
     """
@@ -35,8 +70,7 @@ def somme(P1, P2):
             pSomme[i] += P2[i]
 
     # on supprime les coefficients nuls
-    while pSomme[-1] == 0:
-        pSomme.pop()
+    pSomme = reduire_coeff(pSomme)
 
     return pSomme
 
@@ -71,8 +105,7 @@ def diff(P1, P2):
             pDiff[i] -= P2[i]
 
     # on supprime les coefficients nuls
-    while pDiff[-1] == 0:
-        pDiff.pop()
+    pDiff = reduire_coeff(pDiff)
 
     return pDiff
 
@@ -100,6 +133,15 @@ def monome(n):
       [0, 0, 0, 0, 1]
     """
   return [0]*(n) + [1]
+
+
+
+
+
+
+
+
+
 
 # Raphael
 
