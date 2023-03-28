@@ -35,7 +35,7 @@ def reduire_coeff(P):
     pCopie = list(P)
 
     # on supprime les coefficients nuls
-    while pCopie[-1] == 0:
+    while pCopie[-1] == 0 and len(pCopie) > 1:
         pCopie.pop()
 
     return pCopie
