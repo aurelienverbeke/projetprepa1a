@@ -287,7 +287,7 @@ def produit(P, Q):
 
     return somme(somme(E1, P_inter), P_extr)
 """
-def puissance(P, n, stockage={}):
+def puissance_opti(P, n, stockage={}):
     P = list(P)
     if n == 0:
         return [1]
@@ -296,18 +296,18 @@ def puissance(P, n, stockage={}):
     if n % 2 == 0:
         T = stockage.get(n//2, None)
         if T is None:
-          T = puissance(P, n//2, stockage=stockage)
+          T = puissance_opti(P, n//2, stockage=stockage)
           stockage[n//2] = T
         return produit(T, T)
     else:
         T = stockage.get((n-1)//2, None)
         if T is None:
-          T = puissance(P, (n-1)//2, stockage=stockage)
+          T = puissance_opti(P, (n-1)//2, stockage=stockage)
           stockage[(n-1)//2] = T
         return produit(produit(T, T), P)
 
 
-def puissance_naive(P, n):
+def puissance(P, n):
     P = list(P)
     T = list(P)
     for i in range(n-1):
@@ -322,5 +322,5 @@ if __name__ == "__main__":
     puissance(P, n)
     print(time() - t)
     t = time()
-    puissance_naive(P, n)
+    puissance_opti(P, n)
     print(time() - t)
