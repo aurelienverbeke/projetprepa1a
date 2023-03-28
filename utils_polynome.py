@@ -57,13 +57,13 @@ def somme(P1, P2):
     """
 
     # on recupere le degre maximal des deux polynomes
-    longueurMax = max([len(P1), len(P2)])
+    degre = max([deg(P1), deg(P2)])
 
     # on cree le nouveau polynome qui contiendra la somme des deux
-    pSomme = [0] * longueurMax
+    pSomme = [0] * (degre + 1)
 
     # on ajoute les coefficients de chaque monome au nouveau polynome, s'ils existent
-    for i in range(longueurMax):
+    for i in range(degre+1):
         if i < len(P1):
             pSomme[i] += P1[i]
         if i < len(P2):
@@ -91,12 +91,12 @@ def diff(P1, P2):
     """
 
     # on recupere le degre maximal des deux polynomes
-    longueurMax = max([len(P1), len(P2)])
+    longueurMax = max([deg(P1), deg(P2)])
 
     # on cree le nouveau polynome qui contiendra la difference des deux
-    pDiff = [0] * longueurMax
+    pDiff = [0] * (degre + 1)
 
-    for i in range(longueurMax):
+    for i in range(degre + 1):
         # on ajoute les coefficients de chaque monome du premier polynome au nouveau polynome, s'ils existent
         if i < len(P1):
             pDiff[i] += P1[i]
