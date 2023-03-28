@@ -21,8 +21,8 @@ def monome(n):
     Returns :   
         list : liste de coefficients du monômes
     Exemple :
-      monome(4)
-      >>> [0, 0, 0, 0, 1]
+      >>> monome(4)
+      [0, 0, 0, 0, 1]
     """
   return [0]*(n) + [1]
 
