@@ -153,6 +153,55 @@ def produit(P1, P2):
 
 
 
+def evalue(P, x):
+    """
+        Evalue un polynome en nombre grace a l'algorithme d'Horner
+        Args:
+            - P list: le polynome a evaluer
+            - x float: la valeur en laquelle evaluer le polynome
+        Returns:
+            float: la valeur du polynome en x donne
+        Exemple:
+            >>> evalue([1, 2, 3], 4)
+            57.0
+    """
+
+    P = reduire_coeff(P)
+    n = deg(P)
+
+    valeur = P[n]
+    for i in range(n-1,-1,-1):
+        valeur = valeur*x + P[i]
+
+    return float(valeur)
+
+
+
+
+
+def poly_newton(L):
+    """
+        Retourne le polynome de newton associe a une liste de coefficients
+        Args:
+            L list: coefficients
+        Returns:
+            list: le polynome de newton correspondant aux coefficients fournis
+        Exemple:
+        >>> poly_newton([1, 2, 3])
+        [-6, 11, -6, 1]
+    """
+
+    P = [-L[0], 1]
+
+    for i in range(1, len(L)):
+        P = produit(P, [-L[i], 1])
+
+    return P
+
+
+
+
+
 
 
 
