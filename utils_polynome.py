@@ -57,6 +57,12 @@ def somme(P1, P2):
             >>> somme([4, 3, -2], [3, 6, 2])
             [7, 9]
     """
+    
+    # si un des polynomes est nul, on renvoie l'autre
+    if deg(P1) == -inf:
+        return P2
+    if deg(P2) == -inf:
+        return P1
 
     # on recupere le degre maximal des deux polynomes
     degre = max(deg(P1), deg(P2))
@@ -89,6 +95,12 @@ def diff(P1, P2):
             >>> diff([4, 3, -2], [3, 6, 2])
             [1, -3, -4]
     """
+    
+    # si un des polynomes est nul, on renvoie l'autre
+    if deg(P1) == -inf:
+        return P2
+    if deg(P2) == -inf:
+        return P1
 
     # on recupere le degre maximal des deux polynomes
     degre = max(deg(P1), deg(P2))
