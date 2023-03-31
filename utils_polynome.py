@@ -167,6 +167,10 @@ def evalue(P, x):
     """
 
     P = reduire_coeff(P)
+
+    if deg(P) == -inf:
+        return 0.0
+
     n = deg(P)
 
     valeur = P[n]
