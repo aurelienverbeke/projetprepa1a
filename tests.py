@@ -62,8 +62,6 @@ def generer_banque(n, deg, maxCoeff, types, mode):
             # --- DONNEES ---
             for i in range(n):
                 polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(deg + 1)]
-                if i == 0:
-                    print(polynome)
                 buffer = struct.pack(formatPack, *polynome)
                 f.write(buffer)
 
