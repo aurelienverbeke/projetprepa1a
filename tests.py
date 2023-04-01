@@ -18,7 +18,7 @@ def generer_banque(n, deg, maxCoeff, types, mode):
             - deg (int) : degre des polynomes a generer
             - maxCoeff (int) : coefficient maximal pour chaque monome, en valeur absolue
             - types (str): int, float
-            - mode (str): lisible, liste, binaire
+            - mode (str): liste, binaire
     """
     
     fichier = "banque_" + mode + ".txt"
@@ -34,22 +34,13 @@ def generer_banque(n, deg, maxCoeff, types, mode):
         formatPack = f">{deg+1}d"
     
 
-    # on ecrit en mode textuel
-    if mode != "binaire":
+    # on ecrit en mode liste
+    if mode == "liste":
         with open(fichier, "w") as f:
+            for i in range(n):
+                polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(deg + 1)]
+                f.write("[" + ", ".join([str(nb) for nb in polynome]) + "]\n")
             
-            # on ecrit sous forme de liste python
-            if mode == "liste":
-                for i in range(n):
-                    polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(deg + 1)]
-                    f.write("[" + ", ".join([str(nb) for nb in polynome]) + "]\n")
-            
-            # on ecrit sous forme plus lisible
-            if mode == "lisible":
-                for i in range(n):
-                    polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(deg + 1)]
-                    f.write(polyn_to_str(polynome) + "\n")
-    
 
     # on ecrit en mode binaire avec les bits de poids fort a gauche
     else:
@@ -82,7 +73,7 @@ def longueur_banque(mode):
     """
         Cherche le nombre de polynomes contenu dans un fichier
         Args:
-            - mode (str): lisible, liste, binaire
+            - mode (str): liste, binaire
         Returns:
             int: nombre de polynomes
     """
@@ -93,22 +84,25 @@ def longueur_banque(mode):
     # on initialise le nombre de polynomes a -12, s'il y a un probleme on le verra
     longueur = -12
 
-    # on cherche dans un fichier ecrit en mode textuel
+    # on cherche dans un fichier ecrit en mode liste
     if mode != "binaire":
         with open(fichier, "r") as f:
             contenu = f.read()
-            # il y a un polinome par ligne, on compte les retours a la ligne
+            # il y a un polynome par ligne, on compte les retours a la ligne
             longueur = contenu.count("\n")
 
+    # on cherche dans un fichier ecrit en mode binaire
     else:
         with open(fichier, "rb") as f:
             # voir description en-tete generer_banque
-
-            # on lit les 9 premiers octets du fichier (type des donnees et nombre de polynomes)
-            buffer = f.read(9)
+            
+            # on se place dans l'en-tete entre le type de donnees et le nombre de polynomes
+            f.seek(1)
+            # on lit les 8 octets suivants (nombre de polynomes)
+            buffer = f.read(8)
             # on reconvertit les octets en valeurs lisibles
-            contenu = struct.unpack(">bQ", buffer)
+            contenu = struct.unpack(">Q", buffer)
             # on extrait le nombre de polynomes
-            longueur = contenu[1]
+            longueur = contenu[0]
     
     return longueur
