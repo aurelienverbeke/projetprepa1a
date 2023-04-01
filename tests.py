@@ -24,7 +24,7 @@ def generer_banque(n, deg, maxCoeff, types, mode):
     fichier = "banque_" + mode + ".txt"
 
     # on choisit la bonne fonction aleatoire a utiliser, en fonction de la demande
-    # cree par la meme occasion le format a utiliser lors de l'ecriture dans le fichier
+    # on cree par la meme occasion le format a utiliser lors de l'ecriture dans le fichier
     # (on ecrira avec les bits de poids fort a gauche)
     fonctionRandom = randint
     formatPack = f">{deg+1}q"
@@ -62,6 +62,8 @@ def generer_banque(n, deg, maxCoeff, types, mode):
             # --- DONNEES ---
             for i in range(n):
                 polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(deg + 1)]
+                if i == 0:
+                    print(polynome)
                 buffer = struct.pack(formatPack, *polynome)
                 f.write(buffer)
 
@@ -106,3 +108,119 @@ def longueur_banque(mode):
             longueur = contenu[0]
     
     return longueur
+
+
+
+
+
+
+def longueur_polynome_banque_binaire():
+    """
+        Retourne la longueur (degre + 1) des polynomes dans une banque de test binaire
+        Returns:
+            int: longeur du polynome
+    """
+
+    # on initialise la longueur des polynomes a -12, s'il y a un probleme on le verra
+    longueur = -12
+
+    with open("banque_binaire.txt", "rb") as f:
+        # voir description en-tete generer_banque
+        
+        # on se place dans l'en-tete entre le type de donnees et le nombre de polynomes
+        f.seek(9)
+        # on lit les 8 octets suivants (nombre de polynomes)
+        buffer = f.read(8)
+        # on reconvertit les octets en valeurs lisibles
+        contenu = struct.unpack(">Q", buffer)
+        # on extrait le nombre de polynomes
+        longueur = contenu[0]
+    
+    return longueur
+
+
+
+
+
+
+def type_coefficients_banque_binaire():
+    """
+        Retourne le type des coefficients des polynomes dans une banque de test binaire
+        Returns:
+            str: type des coefficients
+    """
+
+    # on initialise...
+    _type = ""
+    # on initialise a -12, s'il y a un probleme on le verra
+    contenu = -12
+
+    with open("banque_binaire.txt", "rb") as f:
+        # voir description en-tete generer_banque
+        
+        # on lit les 8 octets suivants (nombre de polynomes)
+        buffer = f.read(1)
+        # on reconvertit les octets en valeurs lisibles
+        contenu = struct.unpack(">b", buffer)[0]
+
+    if contenu == 0:
+        return "int"
+    else:
+        return "float"
+
+
+
+
+
+
+def utiliser_banque(indice, mode):
+    """
+        Va chercher un polynome dans une banque de tests
+        Args:
+            - indice (int): numero du polynome a aller chercher (commence a 0)
+            - mode (str): liste, binaire
+        Returns:
+            list: le polynome demande
+    """
+
+    # nom du fichier correspondant au mode d'ecriture
+    fichier = "banque_" + mode + ".txt"
+
+    # on initialise le polynome
+    polynome = list()
+
+    # on cherche dans un fichier ecrit en mode liste
+    if mode != "binaire":
+        with open(fichier, "r") as f:
+            ligne = f.readline()
+            for _ in range(indice):
+                ligne = f.readline()
+        polynome = eval(ligne)
+
+    # on cherche dans un fichier ecrit en mode binaire
+    else:
+        with open(fichier, "rb") as f:
+            # voir description en-tete generer_banque
+
+            # on commence par trouver la longueur du polynome (degre + 1)
+            longueur_polynome = longueur_polynome_banque_binaire()
+            
+            # on cree le format a utiliser lors de l'ecriture dans le fichier
+            formatUnpack = ""
+            if type_coefficients_banque_binaire() == "int":
+                formatUnpack = f">{longueur_polynome}q"
+            else:
+                formatUnpack = f">{longueur_polynome}d"
+
+
+            # on se place la ou il faut
+            # 17 octets d'en-tete + un certain nombre d'octets pour chaque polynome
+            f.seek(17 + longueur_polynome * indice * struct.calcsize("q"))
+            # on lit les octets suivants (tous les coefficients du polynome)
+            buffer = f.read(longueur_polynome * struct.calcsize("q"))
+            # on reconvertit les octets en valeurs lisibles
+            contenu = struct.unpack(formatUnpack, buffer)
+            # on extrait le nombre de polynomes
+            polynome = list(contenu)
+
+    return polynome
