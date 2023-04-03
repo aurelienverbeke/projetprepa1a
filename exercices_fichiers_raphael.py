@@ -2,9 +2,7 @@
 
 """
 Authors:
-    - BOURGOUIN Raphael
-    - VERBEKE Aurelien
-    - VERGNOU Brice
+    BOURGOUIN Raphael
 """
 
 import matplotlib.pyplot as plt
