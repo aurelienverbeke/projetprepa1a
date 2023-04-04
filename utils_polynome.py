@@ -6,6 +6,7 @@ Authors:
     - VERBEKE Aurelien
     - VERGNOU Brice
 """
+
 from math import inf
 from time import time
 from random import randint
@@ -170,13 +171,16 @@ def evalue(P, x):
             57.0
     """
 
+    # on s'assure qu'on travaille sur un objet propre
     P = reduire_coeff(P)
 
+    # surprise...le polynome nul vaut 0 en tout point
     if deg(P) == -inf:
         return 0.0
 
     n = deg(P)
 
+    # on effectue l'algorithme d'Horner
     valeur = P[n]
     for i in range(n-1,-1,-1):
         valeur = valeur*x + P[i]
@@ -199,8 +203,10 @@ def poly_newton(L):
         [-6, 11, -6, 1]
     """
 
+    # on initialise le polynome qu'on multipliera avec les autres
     P = [-L[0], 1]
 
+    # on multiplie a chaque fois avec le polynome de degre 1 : X - coefficient_demande
     for i in range(1, len(L)):
         P = produit(P, [-L[i], 1])
 
@@ -217,6 +223,9 @@ def division(P1, P2):
             - P1, P2 (list): les polynomes a diviser
         Returns:
             tuple: quotient et reste de la division euclidienne
+        Exemple:
+            >>> division([1, 0, 0, -3, 6, 5], [-2, 0, 3])
+            ([1.3333333333333333, 0.11111111111111116, 2.0, 1.6666666666666667], [3.6666666666666665, 0.22222222222222232])
     """
     
     P1 = reduire_coeff(P1)
@@ -244,8 +253,14 @@ def est_divisible(P1, P2):
             - P1, P2 (list) : les polynomes pour lesquels ont doit determiner la divisibilite
         Returns:
             bool: True si P1 est divisible par P2, False sinon
+        Exemple:
+            >>> est_divisible([1, 0, 0, -3, 6, 5], [-2, 0, 3])
+            False
+            >>> est_divisible([1, -2, 1], [-1, 1])
+            True
     """
     
+    # trivial...
     return division(P1, P2)[1] == [0]
 
 
@@ -544,11 +559,4 @@ def primitive_polyn(P):
 
 
 if __name__ == "__main__":
-    P = [randint(0, 100) for x in range(100)]
-    n = 50
-    t = time()
-    puissance(P, n)
-    print(time() - t)
-    t = time()
-    puissance_opti(P, n)
-    print(time() - t)
+    return
