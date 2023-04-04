@@ -385,7 +385,7 @@ def puissance(P, n):
         [1, 2, 1]
     """
     if n == 0:
-        return [1]
+        return monome(0)
 
     P = list(P)
     T = list(P)
