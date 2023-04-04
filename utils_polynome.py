@@ -384,6 +384,9 @@ def puissance(P, n):
         >>> puissance([1, 1], 2)
         [1, 2, 1]
     """
+    if n == 0:
+        return [1]
+
     P = list(P)
     T = list(P)
     for i in range(n-1):
