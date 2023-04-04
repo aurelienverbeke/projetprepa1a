@@ -405,7 +405,7 @@ def derive_polyn(P):
         >>> derive_polyn([1, 1])
         [1]
     """
-    polyn_derive = []
+    derive_P = []
     for i, x in enumerate(P[1:]):
         polyn_derive.append((i+1)*x)
     return polyn_derive
