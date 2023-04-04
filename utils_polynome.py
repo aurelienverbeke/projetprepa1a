@@ -215,6 +215,7 @@ def division(P1, P2):
         Returns:
             tuple: quotient et reste de la division euclidienne
     """
+    
     P1 = reduire_coeff(P1)
     P2 = reduire_coeff(P2)
     quotient = [0]
@@ -241,7 +242,77 @@ def est_divisible(P1, P2):
         Returns:
             bool: True si P1 est divisible par P2, False sinon
     """
+    
     return division(P1, P2)[1] == [0]
+
+
+
+
+
+def pgcd(P1, P2):
+    """
+        Renvoie le PGCD de deux polynomes
+        Args:
+            - P1, P2 (list) : deux polynomes pour lesquels on veut determiner le pgcd
+        Returns:
+            list: le pgcd des deux polynomes
+        Exemple:
+            >>> pgcd([-1, 2, -1, 1, -2, 1], [-2, 2, -1, 1])
+            [-1.0, 1.0]
+    """
+    
+    P1 = reduire_coeff(P1)
+    P2 = reduire_coeff(P2)
+    
+
+    # --- CAS PARTICULIERS ---
+    # si les deux polynomes sont egaux, les deux sont pgcd l'un de l'autre
+    if P1 == P2:
+        # on renvoie un polynome unitaire
+        return produit(P1, [1/P1[-1]])
+
+    # les polynomes sont de meme degre mais non egaux
+    # le PGCD vaut forcement 1
+    if deg(P1) == deg(P2):
+        return [1]
+
+
+    # --- CAS GENERAL / ALGORITHME D'EUCLIDE ---
+    # on veut P1 de plus haut degre que P2 pour pouvoir appliquer Euclide tranquillement
+    if(deg(P2) > deg(P1)):
+        temp = list(P2)
+        P2 = list(P1)
+        P1 = list(temp)
+
+    
+    # initialisation d'une variable necessaire plus tard
+    restePrecedent = [0]
+
+    # on commence l'algorithme d'Euclide...
+    aDiviser = P1
+    diviseur = P2
+
+    resultat = division(aDiviser, diviseur)
+    
+    # des la premiere division, on a un reste nul
+    # le pgcd est donc le polynome de degre le plus faible
+    if resultat[1] == [0]:
+        # on renvoie un polynome unitaire
+        return produit(P2, [1/P2[-1]])
+
+    # tant que le reste de la division euclidienne n'est pas nul
+    while(resultat[1] != [0]):
+        # l'ancien diviseur devient le polynome a diviser
+        aDiviser = diviseur
+        # l'ancien reste devient le polynome diviseur
+        diviseur = resultat[1]
+        # on garde le reste precedent pour pouvoir remonter au dernier reste non nul
+        restePrecedent = resultat[1]
+        # on fait la division euclidienne
+        resultat = division(aDiviser, diviseur)
+    
+    # on renvoie un polynome unitaire
+    return produit(restePrecedent, [1/restePrecedent[-1]])
 
 
 
