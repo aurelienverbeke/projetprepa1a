@@ -344,38 +344,53 @@ def pgcd(P1, P2):
 # Brice
 
 def monome(n):
-  """
-    Renvoie une liste de coefficients par ordre de puissances croissantes
-    correspondant au monome X^n
-    Args:
-        - n (int >=0 ): degré du monome
-    Returns :
-        list : liste de coefficients du monômes
-    Exemple :
-      >>> monome(4)
-      [0, 0, 0, 0, 1]
     """
-  return [0]*(n) + [1]
+        Renvoie une liste de coefficients par ordre de puissances croissantes
+        correspondant au monome X^n
+        Args:
+            - n (int >=0 ): degré du monome
+        Returns :
+            list : liste de coefficients du monômes
+        Exemple :
+            >>> monome(4)
+            [0, 0, 0, 0, 1]
+    """
+
+    return [0]*(n) + [1]
+
+
+
+
 
 def deg(P):
-  """
-    Renvoie le degré du polynôme passé en entrée  
-    Args:
-        - P (list): le polynôme
-    Returns :   
-        int or float : le degré du polynôme
-    Exemple :
-      >>> deg([0])
-      -inf
-      >>> deg([5,6,3,0])
-      2
-  """
-  P = reduire_coeff(P)
-  degre = len(P) - 1
-  if degre == 0 and P[0] == 0:
-    return - inf
-  else:
-    return degre
+    """
+        Renvoie le degré du polynôme passé en entrée  
+        Args:
+            - P (list): le polynôme
+        Returns :   
+            int or float : le degré du polynôme
+        Exemple :
+            >>> deg([0])
+            -inf
+            >>> deg([5,6,3,0])
+            2
+    """
+  
+    # on s'assure d'avoir un polynome sans coefficients nuls pour des puissances de X superieures au degre
+    P = reduire_coeff(P)
+
+    # on en deduit le degre du polynome
+    degre = len(P) - 1
+
+    # le polynome est non, son degre est -infini
+    if degre == 0 and P[0] == 0:
+        return - inf
+
+    else:
+        return degre
+
+
+
 
 
 
@@ -387,15 +402,16 @@ def deg(P):
 
 def polyn_to_str(P):
     """
-    Renvoie la chaine de caractères représentant le polynôme P, sous la forme "a X**n + b X**(n-1) + ... "
-    Args:
-        - P (list): le polynome à représenter
-    Returns:
-        str: Chaine de caractères représentant le polynômes
-    Exemple:
-        >>> polyn_to_str([1, -2, -1, 0, 1, 3])
-        "3 X**5 + X**4 - X**2 - 2 X + 1"
+        Renvoie la chaine de caractères représentant le polynôme P, sous la forme "a X**n + b X**(n-1) + ... "
+        Args:
+            - P (list): le polynome à représenter
+        Returns:
+            str: Chaine de caractères représentant le polynômes
+        Exemple:
+            >>> polyn_to_str([1, -2, -1, 0, 1, 3])
+            "3 X**5 + X**4 - X**2 - 2 X + 1"
     """
+    
     chaine = ""
     for i in range(len(P) - 1, -1, -1):
         if P[i] != 0:
@@ -420,30 +436,44 @@ def polyn_to_str(P):
             else:
                 monome = f"X**{i} "
             chaine += coef + monome
+    
     return chaine.strip("+ ")
+
+
+
 
 
 def unitaire(P):
     """
-    Revoie le polynome unitaire correspondant a P
-    Args:
-         - P (list): Le polynome que l'on veut transformer en polynome unitaire
-    Returns:
-        list: Le polynome unitaire correspondant à P
-    Exemple:
-        >>> unitaire([2, -7, -6, 34, 10, -63, -22, 44, 24])
-        [0.08333333333333333, -0.2916666666666667, -0.25, 1.4166666666666667, 0.4166666666666667, -2.625, -0.9166666666666666, 1.8333333333333333, 1.0]
+        Revoie le polynome unitaire correspondant a P
+        Args:
+            - P (list): Le polynome que l'on veut transformer en polynome unitaire
+        Returns:
+            list: Le polynome unitaire correspondant à P
+        Exemple:
+            >>> unitaire([2, -7, -6, 34, 10, -63, -22, 44, 24])
+            [0.08333333333333333, -0.2916666666666667, -0.25, 1.4166666666666667, 0.4166666666666667, -2.625, -0.9166666666666666, 1.8333333333333333, 1.0]
     """
+    
+    # on s'assure de travailler sur un polynome propre
+    P = reduire_coeff(P)
+
+    # le polynome unitaire correspondant au polynome nul est le polynome nul
     if P == [0]:
         return [0]
+
+    # le polynome est deja unitaire
     elif P[-1] == 1:
-        return reduire_coeff(P)
+        return P
 
-    p_unitaire = reduire_coeff(P)
-    coef_dominant = p_unitaire[-1]
-    p_unitaire = [x/coef_dominant for x in p_unitaire]
-    return p_unitaire
+    # on divise tous les coefficients par le coefficient dominant
+    return produit(P, [1/P[-1]])
 
+
+
+
+
+### DES TESTS NON FONCTIONNELS
 """
 def produit(P, Q):
     if len(P) == 1:
@@ -482,6 +512,11 @@ def produit(P, Q):
 
     return somme(somme(E1, P_inter), P_extr)
 """
+
+
+
+
+### EN TEST
 def puissance_opti(P, n, stockage={}):
     P = list(P)
     if n == 0:
@@ -502,6 +537,9 @@ def puissance_opti(P, n, stockage={}):
         return produit(produit(T, T), P)
 
 
+
+
+
 def puissance(P, n):
     """
     Renvoie le polynôme P^n
@@ -514,14 +552,22 @@ def puissance(P, n):
         >>> puissance([1, 1], 2)
         [1, 2, 1]
     """
+    
+    # un polynome a la puissance 0 vaut 1
     if n == 0:
         return monome(0)
 
-    P = list(P)
+    P = reduire_coeff(P)
     T = list(P)
+    
+    # on le multiplie n-1 fois par lui meme
     for i in range(n-1):
         P = produit(P, T)
+    
     return P
+
+
+
 
 
 def derive_polyn(P):
@@ -535,10 +581,19 @@ def derive_polyn(P):
         >>> derive_polyn([1, 1])
         [1]
     """
+    
     derive_P = []
+    
+    # i est la puissance sur le X
+    # x est le coefficient devant X^i
+    # on multiplie chaque coefficient par la puissance
     for i, x in enumerate(P[1:]):
         derive_P.append((i+1)*x)
+    
     return derive_P
+
+
+
 
 
 def primitive_polyn(P):
@@ -552,11 +607,19 @@ def primitive_polyn(P):
         >>> primitive_polyn([1, 1])
         [0, 1, .5]
     """
+    
     primitive_P = [0]
+    
+    # i est la puissance sur le X
+    # x est le coefficient devant X^i
+    # on divise chaque coefficient par la puissance
     for i, x in enumerate(P):
         primitive_P.append(x/(i+1))
+    
     return primitive_P
 
 
-if __name__ == "__main__":
-    return
+
+
+
+#if __name__ == "__main__":
