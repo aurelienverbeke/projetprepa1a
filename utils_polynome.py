@@ -9,6 +9,7 @@ Authors:
 from math import inf
 from time import time
 from random import randint
+import fractions as F
 
 
 
@@ -201,6 +202,32 @@ def poly_newton(L):
         P = produit(P, [-L[i], 1])
 
     return P
+
+
+
+
+
+def division(P1, P2):
+    """
+        Effectue la division euclidienne du polynome 1 par le polynome 2
+        Args:
+            - P1, P2 (list): les polynomes a diviser
+        Returns:
+            tuple : quotient et reste de la division euclidienne
+    """
+    P1 = reduire_coeff(P1)
+    P2 = reduire_coeff(P2)
+    quotient = [0]
+    
+    while(deg(P1) >= deg(P2)):
+        monomeMultiplicatif = monome(deg(P1) - deg(P2))
+        coeffMultiplicatif = P1[-1] / P2[-1]
+        aSoustraire = produit(produit(monomeMultiplicatif, P2), [coeffMultiplicatif])
+        quotient = somme(quotient, produit(monomeMultiplicatif, [coeffMultiplicatif]))
+        P1 = diff(P1, produit(produit(monomeMultiplicatif, P2), [coeffMultiplicatif]))
+
+    return (quotient, P1)
+
 
 
 
