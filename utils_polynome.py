@@ -411,11 +411,48 @@ def puissance(P, n):
         >>> puissance([1, 1], 2)
         [1, 2, 1]
     """
+    if n == 0:
+        return monome(0)
+
     P = list(P)
     T = list(P)
     for i in range(n-1):
         P = produit(P, T)
     return P
+
+
+def derive_polyn(P):
+    """
+    Dérive le polynome
+    Args:
+        - P (list): Le polynome à dériver
+    Returns:
+        list: Le polynome dérivé
+    Exemple:
+        >>> derive_polyn([1, 1])
+        [1]
+    """
+    derive_P = []
+    for i, x in enumerate(P[1:]):
+        derive_P.append((i+1)*x)
+    return derive_P
+
+
+def primitive_polyn(P):
+    """
+    Renvoie le polynome primitif de coefficient constant nul
+    Args:
+        - P (list): Le polynome à primitiver
+    Returns:
+        list: Le polynome primitif
+    Exemple:
+        >>> primitive_polyn([1, 1])
+        [0, 1, .5]
+    """
+    primitive_P = [0]
+    for i, x in enumerate(P):
+        primitive_P.append(x/(i+1))
+    return primitive_P
 
 
 if __name__ == "__main__":
