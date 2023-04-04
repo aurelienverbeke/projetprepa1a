@@ -373,6 +373,17 @@ def puissance_opti(P, n, stockage={}):
 
 
 def puissance(P, n):
+    """
+    Renvoie le polynôme P^n
+    Args:
+         - P (list): Le polynôme à mettre à la puissance
+         - n (int): La puissance
+    Returns:
+        - list: Le polynome P^n
+    Exemple:
+        >>> puissance([1, 1], 2)
+        [1, 2, 1]
+    """
     P = list(P)
     T = list(P)
     for i in range(n-1):
