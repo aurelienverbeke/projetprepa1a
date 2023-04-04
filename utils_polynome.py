@@ -391,6 +391,23 @@ def puissance(P, n):
     return P
 
 
+def derive_polyn(P):
+    """
+    Dérive le polynome
+    Args:
+        - P (list): Le polynome à dériver
+    Returns:
+        list: Le polynome dérivé
+    Exemple:
+        >>> derive_polyn([1, 1])
+        [1]
+    """
+    polyn_derive = []
+    for i, x in enumerate(P[1:]):
+        polyn_derive.append((i+1)*x)
+    return polyn_derive
+
+
 if __name__ == "__main__":
     P = [randint(0, 100) for x in range(100)]
     n = 50
