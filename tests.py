@@ -34,11 +34,21 @@ def generer_banque(n, deg, maxCoeff, types, mode):
         formatPack = f">{deg+1}d"
     
 
+    polyn_de_test = (
+        [0]*(deg + 1),
+        [1]*(deg + 1)
+    )
+
+
     # on ecrit en mode liste
     if mode == "liste":
         with open(fichier, "w") as f:
-            for i in range(n):
-                polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(deg + 1)]
+            for P in polyn_de_test:
+                f.write("[" + ", ".join([str(nb) for nb in P]) + "]\n")
+
+            for i in range(n-len(polyn_de_test)):
+                t = randint(1, deg + 1)
+                polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(t)]+[0]*(deg + 1 - t)
                 f.write("[" + ", ".join([str(nb) for nb in polynome]) + "]\n")
             
 
@@ -60,8 +70,13 @@ def generer_banque(n, deg, maxCoeff, types, mode):
            
 
             # --- DONNEES ---
-            for i in range(n):
-                polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(deg + 1)]
+            for P in polyn_de_test:
+                buffer = struct.pack(formatPack, *P)
+                f.write(buffer)
+
+            for i in range(n-len(polyn_de_test)):
+                t = randint(1, deg + 1)
+                polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(t)]+[0]*(deg + 1 - t)
                 buffer = struct.pack(formatPack, *polynome)
                 f.write(buffer)
 
