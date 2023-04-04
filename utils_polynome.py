@@ -407,8 +407,25 @@ def derive_polyn(P):
     """
     derive_P = []
     for i, x in enumerate(P[1:]):
-        polyn_derive.append((i+1)*x)
-    return polyn_derive
+        derive_P.append((i+1)*x)
+    return derive_P
+
+
+def primitive_polyn(P):
+    """
+    Renvoie le polynome primitif de coefficient constant nul
+    Args:
+        - P (list): Le polynome à primitiver
+    Returns:
+        list: Le polynome primitif
+    Exemple:
+        >>> primitive_polyn([1, 1])
+        [0, 1, .5]
+    """
+    primitive_P = [0]
+    for i, x in enumerate(P):
+        primitive_P.append(x/(i+1))
+    return primitive_P
 
 
 if __name__ == "__main__":
