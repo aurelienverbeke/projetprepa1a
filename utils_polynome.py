@@ -213,7 +213,7 @@ def division(P1, P2):
         Args:
             - P1, P2 (list): les polynomes a diviser
         Returns:
-            tuple : quotient et reste de la division euclidienne
+            tuple: quotient et reste de la division euclidienne
     """
     P1 = reduire_coeff(P1)
     P2 = reduire_coeff(P2)
@@ -228,6 +228,20 @@ def division(P1, P2):
 
     return (quotient, P1)
 
+
+
+
+
+def est_divisible(P1, P2):
+    """
+        Dit si le polynome 1 est divisible par le polynome 2
+        S'il l'est, le reste de la division euclidienne sera donc de 0
+        Args:
+            - P1, P2 (list) : les polynomes pour lesquels ont doit determiner la divisibilite
+        Returns:
+            bool: True si P1 est divisible par P2, False sinon
+    """
+    return division(P1, P2)[1] == [0]
 
 
 
