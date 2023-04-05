@@ -473,73 +473,6 @@ def unitaire(P):
 
 
 
-### DES TESTS NON FONCTIONNELS
-"""
-def produit(P, Q):
-    if len(P) == 1:
-        return [P[0]*x for x in Q]
-    if len(Q) == 1:
-        return [Q[0]*x for x in P]
-    if P == [0] or Q == [0]:
-        return [0]
-
-    degreeP = deg(P)
-    degreeQ = deg(Q)
-    n = max(degreeP, degreeQ) + 1
-    if n % 2 == 1 : n += 1
-
-    n //= 2
-
-    P1 = P[:max(n, degreeP)]
-    Q1 = Q[:max(n, degreeQ)]
-    P2 = P[max(n, degreeP):]
-    Q2 = Q[max(n, degreeQ):]
-
-    if not P2: P2 = [0]
-    if not Q2: Q2 = [0]
-
-    E1 = produit(P1, Q1)
-    E2 = produit(P2, Q2)
-    E3 = produit(somme(P1, P2), somme(Q1, Q2))
-
-    print(P1, Q1, P2, Q2, n)
-    print(E1, E2, E3, n)
-
-    P_inter = [0]*n + diff(diff(E3, E1), E2)
-    P_extr = [0]*(2*n) + E2
-
-    print(somme(somme(E1, P_inter), P_extr), P, Q)
-
-    return somme(somme(E1, P_inter), P_extr)
-"""
-
-
-
-
-### EN TEST
-def puissance_opti(P, n, stockage={}):
-    P = list(P)
-    if n == 0:
-        return [1]
-    if n == 1:
-        return P
-    if n % 2 == 0:
-        T = stockage.get(n//2, None)
-        if T is None:
-          T = puissance_opti(P, n//2, stockage=stockage)
-          stockage[n//2] = T
-        return produit(T, T)
-    else:
-        T = stockage.get((n-1)//2, None)
-        if T is None:
-          T = puissance_opti(P, (n-1)//2, stockage=stockage)
-          stockage[(n-1)//2] = T
-        return produit(produit(T, T), P)
-
-
-
-
-
 def puissance(P, n):
     """
     Renvoie le polynôme P^n
@@ -555,7 +488,7 @@ def puissance(P, n):
     
     # un polynome a la puissance 0 vaut 1
     if n == 0:
-        return monome(0)
+        return monomei(0)
 
     P = reduire_coeff(P)
     T = list(P)
@@ -617,6 +550,59 @@ def primitive_polyn(P):
         primitive_P.append(x/(i+1))
     
     return primitive_P
+
+
+
+
+
+
+
+
+
+
+### DES TESTS NON FONCTIONNELS
+
+def test_produit(P, Q):
+    if len(P) == 1:
+        return [P[0]*x for x in Q]
+    if len(Q) == 1:
+        return [Q[0]*x for x in P]
+    if P == [0] or Q == [0]:
+        return [0]
+
+    degreeP = deg(P)
+    degreeQ = deg(Q)
+    n = max(degreeP, degreeQ) + 1
+    if n % 2 == 1 : n += 1
+
+    n //= 2
+
+    P1 = P[:max(n, degreeP)]
+    Q1 = Q[:max(n, degreeQ)]
+    P2 = P[max(n, degreeP):]
+    Q2 = Q[max(n, degreeQ):]
+
+    if not P2: P2 = [0]
+    if not Q2: Q2 = [0]
+
+    E1 = produit(P1, Q1)
+    E2 = produit(P2, Q2)
+    E3 = produit(somme(P1, P2), somme(Q1, Q2))
+
+    print(P1, Q1, P2, Q2, n)
+    print(E1, E2, E3, n)
+
+    P_inter = [0]*n + diff(diff(E3, E1), E2)
+    P_extr = [0]*(2*n) + E2
+
+    print(somme(somme(E1, P_inter), P_extr), P, Q)
+
+    return somme(somme(E1, P_inter), P_extr)
+
+
+
+
+
 
 
 
