@@ -57,8 +57,6 @@ def racines_polyn(P, precision=1e-8, reduire=True):
 
     racines = []
     f = lambda x: evalue(Q, x)
-    if Q == [-0.25, 23.75, -13.75, -7.25, 1.0]:
-        f = lambda x: x**4-7.25*x**3-13.75*x**2+23.75*x-.25
     for i in range(len(intervalles)-1):
         if f(intervalles[i])*f(intervalles[i+1]) < 0:
             racines.append(Newton(f, intervalles[i], intervalles[i+1], precision))
