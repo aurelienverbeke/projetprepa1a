@@ -23,6 +23,8 @@ def racines_polyn(P, precision=1e-8, reduire=True):
 
     if deg(P) == - inf:
         return []
+    if deg(P) == 0:
+        return []
 
     if reduire:
         P = [F(x) for x in P]
@@ -33,8 +35,6 @@ def racines_polyn(P, precision=1e-8, reduire=True):
     else:
         Q = unitaire(P)
 
-    if deg(Q) == 0:
-        return []
     if deg(Q) == 1:
         return [-Q[0]/Q[1]]
     if deg(Q) == 2:
