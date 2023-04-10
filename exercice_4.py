@@ -10,16 +10,16 @@ from fractions import Fraction as F
 import numpy as np
 from math import inf
 
-def Newton(f, x, y, epsilon):
-    x += 1e-3
-    y -= 1e-3
+def Newton(f, a, b, epsilon):
+    x = (a+b)/2
+    y = x + 1e-3
     while abs(y - x) > epsilon:
         tmp = y
         y = y - f(y)*(y-x)/(f(y)-f(x))
         x = tmp
     return y
 
-def racines_polyn(P, precision=1e-8, reduire=True):
+def racines_polyn(P, precision=1e-8, reduire=True, renvoyer_intervalles=False):
 
     if deg(P) == - inf:
         return []
@@ -51,14 +51,29 @@ def racines_polyn(P, precision=1e-8, reduire=True):
         else:
             return []
 
-    racines_derivee = racines_polyn(derive_polyn(Q), reduire=False)
+    intervalles_derivee = racines_polyn(derive_polyn(Q), reduire=False, renvoyer_intervalles=True)
     mu = max(1, sum([abs(x) for x in Q[:-1]]))
-    intervalles = [-mu] + racines_derivee + [mu]
+    intervalles = [-mu-1e-3] + intervalles_derivee + [mu+1e-3]
 
     racines = []
     f = lambda x: evalue(Q, x)
     for i in range(len(intervalles)-1):
-        if f(intervalles[i])*f(intervalles[i+1]) < 0:
+        if f(intervalles[i])*f(intervalles[i+1]) <= 0:
             racines.append(Newton(f, intervalles[i], intervalles[i+1], precision))
 
-    return racines
+    if not renvoyer_intervalles:
+        return racines
+
+    nouveaux_intervalles = []
+    i = 0
+    j = 0
+    while i < len(racines) and j < len(intervalles_derivee):
+        if racines[i] < intervalles_derivee[j]:
+            nouveaux_intervalles.append(racines[i])
+            i += 1
+        else:
+            nouveaux_intervalles.append(intervalles_derivee[j])
+            j += 1
+    nouveaux_intervalles += racines[i:] + intervalles_derivee[j:]
+
+    return nouveaux_intervalles
