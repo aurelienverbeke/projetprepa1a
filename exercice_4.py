@@ -84,37 +84,28 @@ def racines_polyn(P, precision=1e-8, reduire=True, renvoyer_intervalles=False):
     # Même si les dérivées premières et secondes sont suffisantes pour garantir la convergence, si l'on ne considère que
     # les racines de la dérivée première et seconde, il arrive que la suite de Newton sorte de l'intervalle
     # la même chose arrive si l'on considère aussi les racines de la dérivée troisième
-    intervalles_derivee = racines_polyn(derive_polyn(Q), reduire=False, renvoyer_intervalles=True)
+    racines_derivees = racines_polyn(derive_polyn(Q), reduire=False, renvoyer_intervalles=True)
 
     # On calcule l'intervalle dans lequel les racines sont situées
     mu = max(1, sum([abs(x) for x in Q[:-1]]))
 
     # On obtient un subdivision de l'intervalle [-mu, mu] pour lequel il y a au maximum une racine dans chaque intervalle
     # de cette subdivision
-    intervalles = [-mu-1e-3] + intervalles_derivee + [mu+1e-3]
+    intervalles = [-mu-1e-3] + racines_derivees + [mu+1e-3]
 
     racines = []
     f = lambda x: evalue(Q, x)
     for i in range(len(intervalles)-1):
+        a = intervalles[i]
+        b = intervalles[i+1]
+
+        # On ajoute si nécéssaire les racines des dérivées
+        if renvoyer_intervalles and i > 0:
+            racines.append(a)
+
         # On applique un TVI afin de vérifier l'existence d'un racine dans l'intervalle
-        if f(intervalles[i])*f(intervalles[i+1]) <= 0:
+        if f(a)*f(b) <= 0:
             # On calcule la racine grâce à la méthode de Newton
-            racines.append(Newton(f, intervalles[i], intervalles[i+1], precision))
+            racines.append(Newton(f, a, b, precision))
 
-    if not renvoyer_intervalles:
-        return racines
-
-    # On rassemble les nouvelles racines et celles des dérivées en les ordonant
-    nouveaux_intervalles = []
-    i = 0
-    j = 0
-    while i < len(racines) and j < len(intervalles_derivee):
-        if racines[i] < intervalles_derivee[j]:
-            nouveaux_intervalles.append(racines[i])
-            i += 1
-        else:
-            nouveaux_intervalles.append(intervalles_derivee[j])
-            j += 1
-    nouveaux_intervalles += racines[i:] + intervalles_derivee[j:]
-
-    return nouveaux_intervalles
+    return racines
