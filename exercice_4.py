@@ -9,6 +9,8 @@ from utils_polynome import derive_polyn, division, pgcd, deg, unitaire, evalue
 from fractions import Fraction as F
 import numpy as np
 from math import inf
+from time import time
+from exercice_1 import tchebychev
 
 def Newton(f, a, b, epsilon):
     """
@@ -33,13 +35,14 @@ def Newton(f, a, b, epsilon):
         x = tmp
     return y
 
-def racines_polyn(P, precision=1e-8, reduire=True, renvoyer_intervalles=False):
+def racines_polyn(P, precision=1e-8, reduire=False, renvoyer_intervalles=False):
     """
     Revoie la liste des racines d'un polynome
     Args:
         - P (list) : le polynome pour lequel on veut les racines
         - precision : la precision des racines
-        - reduire : True si l'on veut reduire le polynome avec Q = P/pgcd(P, P_prime), doit être laissé à True
+        - reduire : True si l'on veut reduire le polynome avec Q = P/pgcd(P, P_prime), le laisser à false rend très souvent
+        la fonction plus rapide
         - renvoyer_intervalles : Doit être laissé à False
     """
 
