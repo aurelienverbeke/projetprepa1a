@@ -5,7 +5,7 @@ Authors:
     - BOURGOUIN Raphael
 """
 
-from utils_polynome import derive_polyn, division, pgcd, deg, unitaire, evalue
+from utils_polynome import derive_polyn, division, pgcd, deg, unitaire, evalue, polyn_to_str
 from fractions import Fraction as F
 import numpy as np
 from math import inf
@@ -35,14 +35,14 @@ def Newton(f, a, b, epsilon):
         x = tmp
     return y
 
-def racines_polyn(P, precision=1e-8, reduire=False, renvoyer_intervalles=False):
+def racines_polyn(P, precision=1e-8, reduire=True, renvoyer_intervalles=False):
     """
     Revoie la liste des racines d'un polynome
     Args:
         - P (list) : le polynome pour lequel on veut les racines
         - precision : la precision des racines
         - reduire : True si l'on veut reduire le polynome avec Q = P/pgcd(P, P_prime), le laisser à false rend très souvent
-        la fonction plus rapide
+        la fonction plus rapide, mais cela peut engendrer des erreurs d'approximation
         - renvoyer_intervalles : Doit être laissé à False
     """
 
@@ -60,7 +60,7 @@ def racines_polyn(P, precision=1e-8, reduire=False, renvoyer_intervalles=False):
 
         Q = unitaire([float(x) for x in Q])
     else:
-        Q = unitaire(P)
+        Q = unitaire([float(x) for x in P])
 
 # ------------------CAS DE BASE-------------------
     # Si le polynôme est de degré 1 ou 2 on utilise les formules que l'on connait pour revoyer les racines
@@ -111,4 +111,35 @@ def racines_polyn(P, precision=1e-8, reduire=False, renvoyer_intervalles=False):
             # On calcule la racine grâce à la méthode de Newton
             racines.append(Newton(f, a, b, precision))
 
+    # On arrondis les racines finales à la précision demandée
+    # les décimales après ne seront pas correctes, cela ne sert à rien de les garder
+    if not renvoyer_intervalles:
+        racines = [round(x, int(-np.log10(precision))) for x in racines]
     return racines
+
+
+def racines_polyn_fich(ftxt):
+    """
+    Crée un fichier racines_{ftxt} dans lequel avec le format [polynome]::[racines] pour chaque racine présente dans {ftxt}
+    Affiche chaque polynome suivi de ses racines
+    Args:
+        - ftxt (str): le nom du fichier contenant les polynomes
+    """
+    # On récupère les polynomes en les séparant
+    with open(ftxt, "r") as f:
+        polynomes = f.read().split("\n")
+
+    with open(f"racines_{ftxt}", "w") as f:
+        for p in polynomes:
+            P = p[1:-1].split(", ") # On sépare chaque élément de la liste en enlevant les crochets
+            P = [float(x) for x in P] # On convertit tous les éléments en flotants
+            print(f"{polyn_to_str(P)}. Racines : {racines_polyn(P)}") # On affiche les racines
+            f.write(f"{P}::{racines_polyn(P)}\n") # On écrit dans les polynomes et leurs racines dans le fichier
+
+
+if __name__ == "__main__":
+    P = [F(2), F(-7), F(-6), F(34), F(10), F(-63), F(-22), F(44), F(24)]
+    racines = racines_polyn(P)
+    print(f"Les racines de {polyn_to_str(P)} sont : {racines[0]}, {racines[1]} et {racines[2]}\n")
+    print(f"Les racines de polynomes de polyn.txt sont:")
+    racines_polyn_fich("polyn.txt")
