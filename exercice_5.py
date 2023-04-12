@@ -60,8 +60,6 @@ def integrale_fonction(a,b,f,n):
     h = (b-a)/n
     L = [a + i*h for i in range(n+1)]
     polynome_lagrange = lagrange(f,L)
-    if n == 50:
-        print(polyn_to_str(polynome_lagrange))
     return integrale_polynome(a,b,polynome_lagrange)
 
 def rectm(a,b,f,n):
