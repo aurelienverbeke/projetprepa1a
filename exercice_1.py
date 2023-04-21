@@ -2,8 +2,6 @@
 
 """
 Authors:
-    - BOURGOUIN Raphael
-    - VERBEKE Aurelien
     - VERGNOU Brice
 """
 
