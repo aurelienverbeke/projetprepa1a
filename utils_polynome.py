@@ -12,16 +12,6 @@ from time import time
 from random import randint
 import fractions as F
 
-
-
-
-
-
-
-
-
-# Aurelien
-
 def reduire_coeff(P):
     """
         Retire les coefficients nuls en fin de polynome
@@ -43,9 +33,6 @@ def reduire_coeff(P):
         pCopie.pop()
 
     return pCopie
-
-
-
 
 
 def somme(P1, P2):
@@ -81,9 +68,6 @@ def somme(P1, P2):
 
     # on supprime les coefficients nuls
     return reduire_coeff(pSomme)
-
-
-
 
 
 def diff(P1, P2):
@@ -122,9 +106,6 @@ def diff(P1, P2):
     return reduire_coeff(pDiff)
 
 
-
-
-
 def produit(P1, P2):
     """
         Renvoie le produit de deux polynomes
@@ -153,10 +134,6 @@ def produit(P1, P2):
 
     # on en profite pour enlever les coefficients inutiles
     return pProd
-
-
-
-
 
 def evalue(P, x):
     """
@@ -188,9 +165,6 @@ def evalue(P, x):
     return float(valeur)
 
 
-
-
-
 def poly_newton(L):
     """
         Retourne le polynome de newton associe a une liste de coefficients
@@ -211,9 +185,6 @@ def poly_newton(L):
         P = produit(P, [-L[i], 1])
 
     return P
-
-
-
 
 
 def division(P1, P2):
@@ -243,8 +214,6 @@ def division(P1, P2):
 
 
 
-
-
 def est_divisible(P1, P2):
     """
         Dit si le polynome 1 est divisible par le polynome 2
@@ -259,12 +228,7 @@ def est_divisible(P1, P2):
             >>> est_divisible([1, -2, 1], [-1, 1])
             True
     """
-    
-    # trivial...
     return division(P1, P2)[1] == [0]
-
-
-
 
 
 def pgcd(P1, P2):
@@ -333,16 +297,6 @@ def pgcd(P1, P2):
     return produit(restePrecedent, [1/restePrecedent[-1]])
 
 
-
-
-
-
-
-
-
-
-# Brice
-
 def monome(n):
     """
         Renvoie une liste de coefficients par ordre de puissances croissantes
@@ -355,7 +309,6 @@ def monome(n):
             >>> monome(4)
             [0, 0, 0, 0, 1]
     """
-
     return [0]*(n) + [1]
 
 
@@ -375,30 +328,16 @@ def deg(P):
             >>> deg([5,6,3,0])
             2
     """
-  
     # on s'assure d'avoir un polynome sans coefficients nuls pour des puissances de X superieures au degre
     P = reduire_coeff(P)
-
     # on en deduit le degre du polynome
     degre = len(P) - 1
-
     # le polynome est non, son degre est -infini
     if degre == 0 and P[0] == 0:
         return - inf
-
     else:
         return degre
 
-
-
-
-
-
-
-
-
-
-# Raphael
 
 def polyn_to_str(P):
     """
@@ -411,17 +350,14 @@ def polyn_to_str(P):
             >>> polyn_to_str([1, -2, -1, 0, 1, 3])
             "3 X**5 + X**4 - X**2 - 2 X + 1"
     """
-    
     chaine = ""
     for i in range(len(P) - 1, -1, -1):
         if P[i] != 0:
-
             # On détermine le signe du coefficient
             if P[i] / abs(P[i]) > 0:
                 signe = "+"
             else:
                 signe = "-"
-
             # On construit le coefficient, si sa valeur absolue est égale à 1, on affiche uniquement le signe
             if abs(P[i]) == 1 and i != 0:
                 coef = f"{signe} "
@@ -440,9 +376,6 @@ def polyn_to_str(P):
     return chaine.strip("+ ")
 
 
-
-
-
 def unitaire(P):
     """
         Revoie le polynome unitaire correspondant a P
@@ -454,23 +387,16 @@ def unitaire(P):
             >>> unitaire([2, -7, -6, 34, 10, -63, -22, 44, 24])
             [0.08333333333333333, -0.2916666666666667, -0.25, 1.4166666666666667, 0.4166666666666667, -2.625, -0.9166666666666666, 1.8333333333333333, 1.0]
     """
-    
     # on s'assure de travailler sur un polynome propre
     P = reduire_coeff(P)
-
     # le polynome unitaire correspondant au polynome nul est le polynome nul
     if P == [0]:
         return [0]
-
     # le polynome est deja unitaire
     elif P[-1] == 1:
         return P
-
     # on divise tous les coefficients par le coefficient dominant
     return produit(P, [1/P[-1]])
-
-
-
 
 
 def puissance(P, n):
@@ -485,10 +411,9 @@ def puissance(P, n):
         >>> puissance([1, 1], 2)
         [1, 2, 1]
     """
-    
     # un polynome a la puissance 0 vaut 1
     if n == 0:
-        return monomei(0)
+        return monome(0)
 
     P = reduire_coeff(P)
     T = list(P)
@@ -552,14 +477,6 @@ def primitive_polyn(P):
     return primitive_P
 
 
-
-
-
-
-
-
-
-
 ### DES TESTS NON FONCTIONNELS
 
 def test_produit(P, Q):
@@ -598,14 +515,6 @@ def test_produit(P, Q):
     print(somme(somme(E1, P_inter), P_extr), P, Q)
 
     return somme(somme(E1, P_inter), P_extr)
-
-
-
-
-
-
-
-
 
 
 #if __name__ == "__main__":

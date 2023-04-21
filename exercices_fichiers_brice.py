@@ -76,4 +76,4 @@ def tab_mult(a,b):
       for k in range(1,101):
         f.write(f"{k} x {i} = {k*i}\n")
 
-tab_mult(1,int(1e5))
+tab_mult(2,5)
