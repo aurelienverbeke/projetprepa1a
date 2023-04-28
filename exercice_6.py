@@ -6,12 +6,9 @@ Authors:
     - VERGNOU Brice
 """
 
-from utils_polynome import *
-import matplotlib.pyplot as plt
 from math import cos,pi
 from exercice_5 import *
 from exercice_4 import *
-from exercice_1 import tchebychev
 
 def deplacement_racines(a,b,L):
     f = lambda x : (b-a)/2*x + (b+a)/2
@@ -27,7 +24,7 @@ def visualisation(f,a,b,n):
     N = n * 100
     e = (b-a)/N
     x = [a+i*e for i in range(N+1)]
-    y_pas_regulier = list(map(fonction_pas_regulier,x))
+    y_pas_regulier = [fonction_pas_regulier(i) for i in x]
     # affichage des points d'intersection
     for i in range(len(L)):
         plt.plot([L[i]],[fonction_pas_regulier(L[i])],"or")
@@ -39,12 +36,12 @@ def visualisation(f,a,b,n):
     polynome_pas_tcheby = lagrange(f,L)
     # fonction associée + évaluation
     fonction_pas_tcheby = lambda x : evalue(polynome_pas_tcheby,x)
-    y_pas_tcheby = list(map(fonction_pas_tcheby,x))
+    y_pas_tcheby = [fonction_pas_tcheby(i) for i in x]
     # affichage des points d'intersection
     for i in range(len(L)):
         plt.plot([L[i]],[fonction_pas_tcheby(L[i])],"ok")
     # évaluation de la fonction "normale"
-    y_fonction = list(map(f,x))
+    y_fonction = [f(i) for i in x]
     # Visualisation
     plt.plot(x,y_fonction,label="Fonction")
     plt.plot(x,y_pas_regulier,label="Lagrange avec pas régulier",color="r")
