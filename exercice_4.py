@@ -8,9 +8,6 @@ Authors:
 from utils_polynome import derive_polyn, division, pgcd, deg, unitaire, evalue, polyn_to_str
 from fractions import Fraction as F
 import numpy as np
-import numpy.polynomial.polynomial as poly
-from time import time
-from exercice_1 import tchebychev
 
 def Newton(f, a, b, k):
     """
@@ -36,7 +33,7 @@ def Newton(f, a, b, k):
     # Sachant que souvent a et b seront des zéros d'une des dérivées
     # On préfèrera prendre x et y au milieu de l'intervalle afin de s'en éloigner
     x = (a+b)/2
-    y = x + 1e-3
+    y = x + epsilon*10
 
     # On utilise le principe de la méthode de Newton
     while abs(y - x) > epsilon:
@@ -48,7 +45,7 @@ def Newton(f, a, b, k):
             else:
                 a = m
             x = (a+b)/2
-            y = x + 1e-8
+            y = x + epsilon*10
         tmp = y
         y = y - f(y)*(y-x)/(f(y)-f(x))
         x = tmp
@@ -157,16 +154,8 @@ def racines_polyn_fich(ftxt):
 
 
 if __name__ == "__main__":
-    """
     P = [F(2), F(-7), F(-6), F(34), F(10), F(-63), F(-22), F(44), F(24)]
     racines = racines_polyn(P)
     print(f"Les racines de {polyn_to_str(P)} sont : {racines[0]}, {racines[1]} et {racines[2]}\n")
     print(f"Les racines de polynomes de polyn.txt sont:")
     racines_polyn_fich("polyn.txt")
-    """
-    for i in range(1, 50):
-        n_roots = [round(float(x), 8) for x in list(poly.Polynomial(tchebychev(i)).roots()) if complex(x).imag == 0]
-        roots = [round(x, 8) for x in racines_polyn(tchebychev(i))]
-        print(i, n_roots == roots)
-        print(n_roots)
-        print(roots)
