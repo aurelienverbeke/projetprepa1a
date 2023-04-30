@@ -11,7 +11,17 @@ from exercice_5 import *
 from exercice_4 import *
 
 def deplacement_racines(a,b,L):
-    f = lambda x : (b-a)/2*x + (b+a)/2
+    """Déplace une liste L de points dans [-1;1] vers [a;b]
+
+    Args:
+        a (float): nouvelle borne inf
+        b (float): nouvelle borne sup
+        L (list): list de points entre -1 et 1
+
+    Returns:
+        list: liste des points entre a et b avec le même espacement ( proportionnellement )
+    """
+    f = lambda x : (b-a)/2*x + (b+a)/2 # formule trouvée à la main ( fonction affine avec f(-1) = a et f(1)=b)
     return [f(e) for e in L]
 
 def visualisation(f,a,b,n):
@@ -62,6 +72,5 @@ if __name__=="__main__":
 De base, la fonction a du mal a être approximée aux extrémités.
 Utiliser les racines du polynomes de tchebychev revient a projeter les points d'un cercle sur l'axe des abscisses et utiliser les points projetés.
 Or, il y a plus de points projettés sur les côtés qu'au milieu à cause de la forme du cercle
-Donc on compense les erreurs d'approximations ( une explication plus rigoureuse explicant pourquoi les points de tchebychev 
-sont meilleurs est fournie avec le reste du projet grâce à un exercice guidé de M. Montaut)
+Donc on compense les erreurs d'approximations
 """

@@ -55,12 +55,38 @@ def lagrange(f,L):
     return P
 
 def integrale_fonction(a,b,f,n):
+    """Retourne la valeur de l'intégrale de f entre a et b approximée par un polynôme
+
+    Args:
+        a (float): borne inférieure
+        b (float): borne supérieure
+        f (function): La fonction à intégrer
+        n (int): nombre de segmentation de l'intervalle
+
+    Returns:
+        float: valeur de l'intégrale
+    """
+    
+    # Création de la liste de point
     h = (b-a)/n
     L = [a + i*h for i in range(n+1)]
+    # Approximation de la fonction par un polynôme de lagrange
     polynome_lagrange = lagrange(f,L)
+    # On renvoie l'intégrale
     return integrale_polynome(a,b,polynome_lagrange)
 
 def rectm(a,b,f,n):
+    """Retrourne la valeur de l'intégrale de f de a à b par la méthode des rectangles milieux avec n rectangles
+
+    Args:
+        a (float): borne inférieure
+        b (float): bone supérieure
+        f (function): fonction à intégrer
+        n (int): nombre de rectangles
+
+    Returns:
+        float: valeur de l'intégrale
+    """
     h = (b-a)/n
     s = 0
     for i in range(1,n+1):
@@ -71,7 +97,7 @@ if __name__=="__main__":
     f = lambda x : 1/(1+25*x**2)
     a = -1
     b = 1
-    result = (atan(5) - atan(-5)) / 5
+    result = (atan(5) - atan(-5)) / 5 # Trouvé à la main pour comparer la précision
     x = list(range(1,51))
     y_rect = []
     y_poly = []
