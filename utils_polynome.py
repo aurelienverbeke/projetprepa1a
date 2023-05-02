@@ -135,6 +135,7 @@ def produit(P1, P2):
     # on en profite pour enlever les coefficients inutiles
     return pProd
 
+
 def evalue(P, x):
     """
         Evalue un polynome en nombre grace a l'algorithme d'Horner
@@ -207,8 +208,11 @@ def division(P1, P2):
         monomeMultiplicatif = monome(deg(P1) - deg(P2))
         coeffMultiplicatif = P1[-1] / P2[-1]
         aSoustraire = produit(produit(monomeMultiplicatif, P2), [coeffMultiplicatif])
+        # parfois, comme pour (16/49)*49, le resultat n'est pas 16 mais quelque chose qui s'en rapproche beaucoup
+        # ainsi, la difference du coefficient de la plus grande puissance tendra vers 0 mais ne l'atteindra jamais)
+        aSoustraire[-1] = P1[-1]
         quotient = somme(quotient, produit(monomeMultiplicatif, [coeffMultiplicatif]))
-        P1 = diff(P1, produit(produit(monomeMultiplicatif, P2), [coeffMultiplicatif]))
+        P1 = diff(P1, aSoustraire)
 
     return (quotient, P1)
 
