@@ -107,9 +107,9 @@ def racines_polyn(P, nombre_decimales=8):
     # On calcule un encadrement de toutes les racines
     mu = max(1, sum([abs(Q[x]) for x in range(len(Q)-1)]))
 
-    # On calcule les dérivées successives de Q jusqu'à tomber sur un polynome constant
+    # On calcule les dérivées successives de Q jusqu'à tomber sur un polynome de degré 2
     derivees = [Q]
-    while deg(derivees[-1]) > 0:
+    while deg(derivees[-1]) > 2:
         derivees.append(unitaire(derive_polyn(derivees[-1])))
         # On rend tous les polynomes unitaires afin d'éviter les erreurs qui peuvent survenir
         # avec des flotants trop grands lorsqu'on évalue
