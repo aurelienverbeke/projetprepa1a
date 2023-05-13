@@ -23,4 +23,4 @@ def binom(n):
     return puissance([1,1],n) # on utilise le principe du binome de newton
 
 if __name__=="__main__":
-    print(binom(15))
+    print(f"Les coefficients binomiaux de la forme (k parmi 15) sont : {binom(15)}")

@@ -39,5 +39,6 @@ def tchebychev(n):
     return T_1
 
 if __name__ == "__main__":
-    print(polyn_to_str(tchebychev(5)))
-    print(polyn_to_str(tchebychev(10)))
+    print("On a:")
+    print(f"T5 = {polyn_to_str(tchebychev(5))}")
+    print(f"T10 = {polyn_to_str(tchebychev(10))}")

@@ -113,4 +113,10 @@ if __name__=="__main__":
     plt.legend()
     plt.xscale('log')
     plt.yscale('log')
+
+    print("On constate sur le graphe que l'integrale calculée à partir de l'interpolation de lagrange\n"
+          "devient de moins en moins précis à mesure que l'on augmente le nombre de subdivisions\n"
+          "Ce vient du phénomènre de Runge (voir exercice suivant)\n"
+          "Donc augmenter le nombre de subdivisions ne permet pas forcément d'approximer plus efficacement")
+
     plt.show()
