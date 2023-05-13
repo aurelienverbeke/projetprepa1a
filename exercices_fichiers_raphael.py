@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 # 3
 def NbCar(file):
     with open(f"{file}", "r") as f:
-        nb = len(f.read().strip())
+        nb = len(f.read())
 
     return nb
 
@@ -30,7 +30,7 @@ def NbLigne(file):
 def NbOccurences(file, c):
     with open(f"{file}", "r") as f:
         occurences = 0
-        for car in "".join(f.readlines()):
+        for car in f.read():
             if car == c:
                 occurences += 1
 
@@ -51,9 +51,10 @@ def MAJ(file):
 with open("coucou", "w") as f:
     f.write("wow un fichier texte avec du texte dedans\nIncroyable non?")
 
-print(f"Le fichier coucou possède {NbCar('coucou')} caractères")
-print(f'Il possède {NbLigne("coucou")} lignes')
-print(f'Et il y a {NbOccurences("coucou", "e")} e dans le fichier coucou')
+print("----------Exercice 6.1-----------")
+print(f"3) Le fichier coucou possède {NbCar('coucou')} caractères")
+print(f'4) Il possède {NbLigne("coucou")} lignes')
+print(f'5) Et il y a {NbOccurences("coucou", "e")} e dans le fichier coucou')
 MAJ("coucou")
 
 # Exercice 6.2
@@ -78,7 +79,7 @@ plt.show()
 
 def tab_mult(a, b):
     for i in range(a, b + 1):
-        with open(f"fichiers/table_de_{i}.txt", "w") as f:
+        with open(f"table_de_{i}.txt", "w") as f:
             for j in range(1, 101):
                 f.write(f"{j} x {i} = {i * j}\n")
 
