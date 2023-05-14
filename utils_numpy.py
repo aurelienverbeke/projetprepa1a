@@ -2,7 +2,7 @@ import numpy.polynomial.polynomial as poly
 from utils_polynome import *
 from exercice_4 import racines_polyn
 from time import time
-from tests import longueur_banque, utiliser_banque
+from gestionbanque import longueur_banque, utiliser_banque
 
 """
 Les fonctions de tests doivent avoir comme argument 2 polynomes (même si la fonction n'en n'utilise qu'un)
