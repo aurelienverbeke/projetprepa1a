@@ -33,6 +33,13 @@ def MAJ(nom):
     with open("maj" + nom, "w") as f:
         f.write(contenu.upper())
 
+with open("bandeorga.txt", "w") as f:
+    f.write("Oui, ma gâtée, RS4 gris nardo, bien sûr qu'ils m'ont raté (gros, bien sûr)\nSoleil dans la bulle, sur le Prado, Shifter pro' (Shifter pro')\nContre-sens (ah), ma chérie, tu es à contre-sens\nPuta, où tu étais quand j'mettais des sept euros d'essence (hein)")
+
+print(f"Caracteres de bandeorga : {nbCar('bandeorga.txt')}")
+print(f"Lignes de bandeorga : {nbLignes('bandeorga.txt')}")
+print(f"Occurrences de e de bandeorga : {nbOccurrences('bandeorga.txt', 'e')}\n")
+MAJ('bandeorga.txt')
 
 
 
@@ -46,21 +53,22 @@ with open("courbe.txt", "r") as f:
     coordonnees = contenu.split(" : ")
     coordonnees.pop() # on enleve la dernier coordonnee vide
 
-    print("Nombre = " + str(len(coordonnees)))
+    print("Nombre de coordonnees = " + str(len(coordonnees)))
 
     m0 = 0
     x = list()
     y = list()
     for i in coordonnees: # pour chaque couple x, y
         index = i.find(",") # on cherche l'indice de la virgule
-        m0 += float(i[:index]) # on recupere l'abscisse
+        m0 += float(i[index+1:]) # on recupere l'abscisse
         x.append(float(i[:index])) # de meme
         y.append(float(i[index+1:])) # on recupere l'ordonnee
     m0 /= len(coordonnees) # on calcule la moyenne
 
-    print("Moyenne = " + str(m0))
+    print("Moyenne des ordonnees = " + str(m0))
     
     plt.plot(x, y)
+    plt.plot([x[0], x[-1]], [m0, m0])
     plt.show()
 
 
