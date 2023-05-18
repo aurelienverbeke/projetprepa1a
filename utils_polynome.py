@@ -84,7 +84,7 @@ def diff(P1, P2):
     
     # si un des polynomes est nul, on renvoie l'autre
     if deg(P1) == -inf:
-        return P2
+        return produit(P2, [-1])
     if deg(P2) == -inf:
         return P1
 
