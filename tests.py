@@ -3,7 +3,7 @@ import numpy as np
 from utils_polynome import *
 from exercice_4 import racines_polyn
 from time import time
-from gestionbanque import longueur_banque, utiliser_banque
+from gestion_banque import longueur_banque, utiliser_banque
 
 
 
