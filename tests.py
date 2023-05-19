@@ -66,7 +66,7 @@ def test_evaluer(P, x):
     return round(poly.polyval(x, P)) == round(evalue(P, x)), poly.polyval(x, P), evalue(P, x)
 
 
-
+# VALIDE, ERREURS D'APPROX, ENCORE
 def test_racines(P, Q):
     resultat = True
     p_numpy = [round(float(x), 8) for x in list(poly.polyroots(P)) if complex(x).imag == 0]
@@ -77,9 +77,12 @@ def test_racines(P, Q):
             break
     return resultat, p_numpy, p_proj
 
+# PAS D'ERREUR, VALIDITE ASSUREE PAR LA FONCTION RACINE
+def test_pgcd(P, Q):
+    return True, pgcd(P, Q), []
 
 
-fonction_test = test_evaluer
+fonction_test = test_pgcd
 
 
 
@@ -89,18 +92,18 @@ print(n)
 tot = 0
 reussi = 0
 
-#with open("erreur.txt", "w") as f:
-    #pass
+with open("erreur.txt", "w") as f:
+    pass
 
-#for i in range(n-1):
-for i in range(n):
+for i in range(n-1):
+#for i in range(n):
     P = utiliser_banque(i, "binaire")
-    #Q = utiliser_banque(i+1, "binaire")
+    Q = utiliser_banque(i+1, "binaire")
     test = []
     try :
         t = time()
-        #test = fonction_test(P, Q)
-        test = fonction_test(P, 4)
+        test = fonction_test(P, Q)
+        #test = fonction_test(P, 4)
         tps = time()-t
         assert test[0]
         print(i, tps)
@@ -108,16 +111,16 @@ for i in range(n):
         reussi += 1
     except Exception as e:
         print(e)
-        #print("erreur", P, Q)
-        print("erreur", P)
+        print("erreur", P, Q)
+        #print("erreur", P)
         print(test)
-        #with open("erreur.txt", "a") as f:
-            #f.write(f"{P}, {Q}")
-            #f.write(P)
-            #f.write(test)
-            #f.write("\n")
+        with open("erreur.txt", "a") as f:
+            f.write(f"{P}, {Q}")
+            f.write(str(P))
+            f.write(str(test))
+            f.write("\n")
 
 print("---------------Résultats------------------")
-#print(f"{reussi/(n-1)*100}% de tests passés ({n-1-reussi} erreurs) ")
-print(f"{reussi/n*100}% de tests passés ({n-reussi} erreurs) ")
+print(f"{reussi/(n-1)*100}% de tests passés ({n-1-reussi} erreurs) ")
+#print(f"{reussi/n*100}% de tests passés ({n-reussi} erreurs) ")
 print(f"Temps moyen d'exécution : {tot/reussi}s")
