@@ -132,11 +132,11 @@ def racines_polyn(P, nombre_decimales=8):
 
         intervalles = [-mu] + racines + [mu]
 
-    return intervalles[1:-1]
+    return [round(x, nombre_decimales) for x in intervalles[1:-1]] # On arrondi le résultat à la précision demandée
 
 def racines_polyn_fich(ftxt):
     """
-    Crée un fichier racines_{ftxt} dans lequel avec le format [polynome]::[racines] pour chaque racine présente dans {ftxt}
+    Crée un fichier racines_{ftxt} avec le format [polynome]::[racines] pour chaque racine présente dans {ftxt}
     Affiche chaque polynome suivi de ses racines
     Args:
         - ftxt (str): le nom du fichier contenant les polynomes
