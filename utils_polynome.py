@@ -8,9 +8,6 @@ Authors:
 """
 
 from math import inf
-from time import time
-from random import randint
-import fractions as F
 
 def reduire_coeff(P):
     """
@@ -336,7 +333,7 @@ def deg(P):
     P = reduire_coeff(P)
     # on en deduit le degre du polynome
     degre = len(P) - 1
-    # le polynome est non, son degre est -infini
+    # le polynome est nul, son degre est -infini
     if degre == 0 and P[0] == 0:
         return - inf
     else:
@@ -519,6 +516,3 @@ def test_produit(P, Q):
     print(somme(somme(E1, P_inter), P_extr), P, Q)
 
     return somme(somme(E1, P_inter), P_extr)
-
-
-#if __name__ == "__main__":
