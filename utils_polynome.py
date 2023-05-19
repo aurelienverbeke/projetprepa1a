@@ -363,7 +363,7 @@ def polyn_to_str(P):
     for i in range(len(P) - 1, -1, -1):
         if P[i] != 0:
             # On détermine le signe du coefficient
-            if P[i] / abs(P[i]) > 0:
+            if P[i] > 0:
                 signe = "+"
             else:
                 signe = "-"
