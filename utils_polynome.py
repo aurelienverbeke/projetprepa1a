@@ -249,10 +249,18 @@ def pgcd(P1, P2):
     
 
     # --- CAS PARTICULIERS ---
+    # si l'un des 2 polynome est nul, on renvoie la version unitaire de l'autre
+    if deg(P1) == -inf:
+        return unitaire(P2)
+
+    if deg(P2) == -inf:
+        return unitaire(P1)
+
+
     # si les deux polynomes sont egaux, les deux sont pgcd l'un de l'autre
     if P1 == P2:
         # on renvoie un polynome unitaire
-        return produit(P1, [1/P1[-1]])
+        return unitaire(P1)
 
     # les polynomes sont de meme degre mais non egaux
     # le PGCD vaut forcement 1
@@ -262,7 +270,7 @@ def pgcd(P1, P2):
 
     # --- CAS GENERAL / ALGORITHME D'EUCLIDE ---
     # on veut P1 de plus haut degre que P2 pour pouvoir appliquer Euclide tranquillement
-    if(deg(P2) > deg(P1)):
+    if deg(P2) > deg(P1):
         temp = list(P2)
         P2 = list(P1)
         P1 = list(temp)
@@ -281,7 +289,7 @@ def pgcd(P1, P2):
     # le pgcd est donc le polynome de degre le plus faible
     if resultat[1] == [0]:
         # on renvoie un polynome unitaire
-        return produit(P2, [1/P2[-1]])
+        return unitaire(P2)
 
     # tant que le reste de la division euclidienne n'est pas nul
     while(resultat[1] != [0]):
@@ -295,7 +303,7 @@ def pgcd(P1, P2):
         resultat = division(aDiviser, diviseur)
     
     # on renvoie un polynome unitaire
-    return produit(restePrecedent, [1/restePrecedent[-1]])
+    return unitaire(restePrecedent)
 
 
 def monome(n):
