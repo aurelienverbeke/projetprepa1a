@@ -7,7 +7,11 @@ Authors:
     - VERGNOU Brice
 """
 
+
+
 from math import inf
+
+
 
 def reduire_coeff(P):
     """

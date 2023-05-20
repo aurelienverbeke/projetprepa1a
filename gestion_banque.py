@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+
+"""
+Authors:
+    - VERBEKE Aurelien
+"""
+
+
 from utils_polynome import polyn_to_str, monome
 from random import randint, uniform
 import struct

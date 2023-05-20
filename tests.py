@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+
+"""
+Authors:
+    - BOURGOUIN Raphael
+    - VERBEKE Aurelien
+"""
+
+
+
 import numpy.polynomial.polynomial as poly
 import numpy as np
 from utils_polynome import *
