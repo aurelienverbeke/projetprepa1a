@@ -1,10 +1,10 @@
-from utils_polynome import polyn_to_str
+from utils_polynome import polyn_to_str, monome
 from random import randint, uniform
 import struct
 
 
 
-def generer_banque(n, deg, maxCoeff, types, mode):
+def generer_banque(n, degMax, maxCoeff, types, mode):
     """
         Cree une banque de test avec des polynomes
 
@@ -15,29 +15,38 @@ def generer_banque(n, deg, maxCoeff, types, mode):
 
         Args:
             - n (int): nombre de polynomes a generer
-            - deg (int) : degre des polynomes a generer
+            - degMax (int) : degre maximal des polynomes a generer
             - maxCoeff (int) : coefficient maximal pour chaque monome, en valeur absolue
             - types (str): int, float
             - mode (str): liste, binaire
     """
     
+    # on doit pouvoir au moins ranger le polynome nul,
+    # le polynome avec tous ses coefficients a 1,
+    # et tous les monomes de degre allant de 0 au degre max
+    if n < degMax + 3:
+        print("Le nombre de polynomes demande n'est pas assez grand")
+        return
+
     fichier = "banque_" + mode + ".txt"
 
     # on choisit la bonne fonction aleatoire a utiliser, en fonction de la demande
     # on cree par la meme occasion le format a utiliser lors de l'ecriture dans le fichier
     # (on ecrira avec les bits de poids fort a gauche)
     fonctionRandom = randint
-    formatPack = f">{deg+1}q"
+    formatPack = f">{degMax+1}q"
     
     if types == "float":
         fonctionRandom = uniform
-        formatPack = f">{deg+1}d"
+        formatPack = f">{degMax+1}d"
     
 
-    polyn_de_test = (
-        [0]*(deg + 1),
-        [1]*(deg + 1)
-    )
+    polyn_de_test = [
+        [0]*(degMax + 1),
+        [1]*(degMax + 1)
+    ]
+
+    polyn_de_test += [monome(i) + [0]*(degMax - i) for i in range(degMax + 1)]
 
 
     # on ecrit en mode liste
@@ -47,8 +56,9 @@ def generer_banque(n, deg, maxCoeff, types, mode):
                 f.write("[" + ", ".join([str(nb) for nb in P]) + "]\n")
 
             for i in range(n-len(polyn_de_test)):
-                t = randint(1, deg + 1)
-                polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(t)]+[0]*(deg + 1 - t)
+                deg = randint(0, degMax) # degre du polynome ecrit
+                # on rajoute des 0 pour qu'ils fassent tous la meme taille
+                polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(deg + 1)] + [0]*(degMax - deg)
                 f.write("[" + ", ".join([str(nb) for nb in polynome]) + "]\n")
             
 
@@ -64,8 +74,8 @@ def generer_banque(n, deg, maxCoeff, types, mode):
             bufferNb = struct.pack(">Q", n)
             f.write(bufferNb)
             
-            # longueur des polynomes stockes (degre + 1)
-            bufferLongueur = struct.pack(">Q", deg+1)
+            # longueur des polynomes stockes (degre max + 1)
+            bufferLongueur = struct.pack(">Q", degMax+1)
             f.write(bufferLongueur)
            
 
@@ -75,8 +85,9 @@ def generer_banque(n, deg, maxCoeff, types, mode):
                 f.write(buffer)
 
             for i in range(n-len(polyn_de_test)):
-                t = randint(1, deg + 1)
-                polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(t)]+[0]*(deg + 1 - t)
+                deg = randint(0, degMax) # degre du polynome ecrit
+                # on rajoute des 0 pour qu'ils fassent tous la meme taille
+                polynome = [fonctionRandom(-maxCoeff, maxCoeff) for _ in range(deg + 1)] + [0]*(degMax - deg)
                 buffer = struct.pack(formatPack, *polynome)
                 f.write(buffer)
 

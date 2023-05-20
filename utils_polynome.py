@@ -46,9 +46,9 @@ def somme(P1, P2):
     
     # si un des polynomes est nul, on renvoie l'autre
     if deg(P1) == -inf:
-        return P2
+        return reduire_coeff(P2)
     if deg(P2) == -inf:
-        return P1
+        return reduire_coeff(P1)
 
     # on recupere le degre maximal des deux polynomes
     degre = max(deg(P1), deg(P2))
@@ -81,9 +81,9 @@ def diff(P1, P2):
     
     # si un des polynomes est nul, on renvoie l'autre
     if deg(P1) == -inf:
-        return produit(P2, [-1])
+        return reduire_coeff(produit(P2, [-1]))
     if deg(P2) == -inf:
-        return P1
+        return reduire_coeff(P1)
 
     # on recupere le degre maximal des deux polynomes
     degre = max(deg(P1), deg(P2))

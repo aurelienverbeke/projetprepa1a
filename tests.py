@@ -28,9 +28,7 @@ def test_somme(P, Q):
 
 # VALIDE
 def test_produit(P, Q):
-    #a = poly.Polynomial(poly.polymul(P, Q)).coef.astype(int)
     a = [round(float(x), 8) for x in list(poly.polymul(P, Q))]
-    #b = poly.Polynomial(produit(P, Q)).coef.astype(int)
     b = [round(float(x), 8) for x in produit(P, Q)]
     return a==b, a, b
 
@@ -82,7 +80,7 @@ def test_pgcd(P, Q):
     return True, pgcd(P, Q), []
 
 
-fonction_test = test_pgcd
+fonction_test = test_difference
 
 
 
